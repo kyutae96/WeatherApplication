@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WeatherApplication</string>
+    <string name="weather_api">fde92e7cf613a11dd2f89dae06d67ad4</string>
 </resources>
