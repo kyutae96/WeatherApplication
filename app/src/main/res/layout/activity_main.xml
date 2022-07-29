@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
@@ -32,7 +33,6 @@
                 android:id="@+id/seoul_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem = "@layout/item_member"
                 tools:itemCount="6"/>
 
             <TextView
@@ -51,7 +51,6 @@
                 android:id="@+id/london_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_member"
                 tools:itemCount="6"/>
 
             <TextView
@@ -70,7 +69,6 @@
                 android:id="@+id/chicago_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_member"
                 tools:itemCount="6"/>
 
 

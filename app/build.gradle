@@ -1,15 +1,15 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
 }
 
 android {
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.weatherapplication.weatherapplication"
-        minSdk 21
-        targetSdk 32
+        minSdk 24
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
