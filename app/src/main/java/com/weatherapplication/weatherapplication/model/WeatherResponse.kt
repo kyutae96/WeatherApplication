@@ -12,18 +12,22 @@ data class ResponseModel(
 )
 
 class WeatherResponse(){
-    @SerializedName("weather") var weather = ArrayList<Weather>()
-    @SerializedName("main") var main: Main? = null
-    @SerializedName("wind") var wind : Wind? = null
-    @SerializedName("dt") var dt : String? = null
-    @SerializedName("sys") var sys: Sys? = null
+    @SerializedName("cod") var cod: String? = null
+    @SerializedName("message") var message: String? = null
+    @SerializedName("cnt") var cnt: String? = null
+    @SerializedName("list") var list = ArrayList<List>()
 }
 
-class Weather {
-    @SerializedName("id") var id: Int = 0
-    @SerializedName("main") var main : String? = null
-    @SerializedName("description") var description: String? = null
-    @SerializedName("icon") var icon : String? = null
+class List {
+    @SerializedName("dt") var dt: String? = null
+    @SerializedName("main") var main: Main? = null
+    @SerializedName("weather") var weather = ArrayList<Weather>()
+    @SerializedName("clouds") var clouds: Clouds? = null
+    @SerializedName("wind") var wind : Wind? = null
+    @SerializedName("visibility") var visibility : String? = null
+    @SerializedName("pop") var pop : String? = null
+    @SerializedName("sys") var sys : Sys? = null
+    @SerializedName("dt_txt") var dt_txt : String? = null
 }
 
 class Main {
@@ -39,6 +43,18 @@ class Main {
     var temp_max: Float = 0.toFloat()
 
 }
+class Weather {
+    @SerializedName("main")
+    var main: String? = null
+    @SerializedName("description")
+    var description: String? = null
+    @SerializedName("icon")
+    var icon: String? = null
+}
+class Clouds {
+    @SerializedName("all")
+    var all: Float = 0.toFloat()
+}
 
 class Wind {
     @SerializedName("speed")
@@ -48,10 +64,6 @@ class Wind {
 }
 
 class Sys {
-    @SerializedName("country")
-    var country: String? = null
-    @SerializedName("sunrise")
-    var sunrise: Long = 0
-    @SerializedName("sunset")
-    var sunset: Long = 0
+    @SerializedName("pod")
+    var pod: String? = null
 }

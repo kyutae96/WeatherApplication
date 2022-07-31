@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface RetrofitAPI {
-    @GET("data/2.5/weather")
+    @GET("data/2.5/forecast")
     fun getWeather(
         @Query("lat") lat: String?,
         @Query("lon") lon: String?,

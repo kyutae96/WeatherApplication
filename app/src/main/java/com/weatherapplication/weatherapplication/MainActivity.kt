@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.weatherapplication.weatherapplication.builder.RetrofitBuilder
 import com.weatherapplication.weatherapplication.databinding.ActivityMainBinding
 import com.weatherapplication.weatherapplication.databinding.ItemWeatherBinding
@@ -42,48 +44,64 @@ class MainActivity : AppCompatActivity() {
         val lat = "37"
         val lng = "126"
         val api_key = getString(R.string.weather_api)
+
         RetrofitBuilder.api.getWeather(lat, lng, api_key).enqueue(object :
             Callback<WeatherResponse> {
             override fun onResponse(
                 call: Call<WeatherResponse>,
                 response: Response<WeatherResponse>
             ) {
-//                when (response.code()) {
-//                    200 -> {
-                val duplicate = response.body()
-                val max = duplicate!!.main!!.temp_max - 273.15
-                val min = duplicate!!.main!!.temp_min - 273.15
-                val average = duplicate!!.main!!.temp - 273.15
-                val icon = duplicate.weather[0].icon
-                val day = duplicate.dt
-                val country = duplicate.sys!!.country
+                when (response.code()) {
+                    200 -> {
+                        val duplicate = response.body()
+                        weathermodel.clear()
+                        for (ds in 0 until duplicate!!.list.size) {
+                            val day = duplicate!!.list[ds].dt
+                            val icon = duplicate!!.list[ds].weather[0].icon
+                            val description = duplicate!!.list[ds].weather[0].description
+                            val temp_max = duplicate!!.list[ds].main!!.temp_max - 273.15
+                            val temp_min = duplicate!!.list[ds].main!!.temp_min - 273.15
 
-                val Timestamp: Long = day!!.toLong()
-                val timeD = Date(Timestamp * 1000)
-                val sdf = SimpleDateFormat("MM월 dd일")
-                val Time: String = sdf.format(timeD)
+                            val Timestamp: Long = day!!.toLong()
+                            val timeD = Date(Timestamp * 1000)
+                            val sdf = SimpleDateFormat("MM월 dd일")
+                            val Time: String = sdf.format(timeD)
+                            println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@2")
+                            println(Time)
+                            println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@2")
+                            val data = ResponseModel(
+                                Time,
+                                icon,
+                                description,
+                                temp_max.toString(),
+                                temp_min.toString()
+                            )
+                            weathermodel.add(data)
 
-                println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@2")
-                println(duplicate)
-                println(max)
-                println(min)
-                println(average)
-                println(icon)
-                println(day)
-                println(country)
-                println(Time)
-                println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@2")
+                            val recyclerView = binding.seoulView
+                            recyclerView.let {
+                                it.layoutManager = LinearLayoutManager(this@MainActivity)
+                                it.adapter = RecyclerViewAdapter(weathermodel)
+                                val adapter = it.adapter
+                                adapter?.notifyDataSetChanged()
+                            }
+//                            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+//                            recyclerView.adapter = RecyclerViewAdapter(weathermodel)
+//                            val adapter = recyclerView.adapter
+//                            adapter?.notifyDataSetChanged()
+                        }
 
-                val recyclerView = binding.seoulView
-                recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-                recyclerView.adapter = RecyclerViewAdapter(weathermodel)
-                val adapter = recyclerView.adapter
-                adapter?.notifyDataSetChanged()
-//                    }
-//                    else -> {
-//                        println("error")
-//                    }
-//                }
+                        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@2")
+                        println(response)
+                        println(duplicate)
+                        println(duplicate!!.list[0].dt)
+                        println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@2")
+
+                    }
+                    else -> {
+                        println("error")
+                    }
+                }
 
             }
 
@@ -118,6 +136,14 @@ class MainActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
 
+            holder.day.text = weathermodel[position].day
+
+            Glide.with(this@MainActivity)
+                .load(weathermodel[position].icon)
+                .into(holder.icon)
+            holder.description.text = weathermodel[position].weather
+            holder.max.text = weathermodel[position].max
+            holder.min.text = weathermodel[position].min
 
         }
     }
@@ -125,6 +151,11 @@ class MainActivity : AppCompatActivity() {
     inner class CustomViewHolder(itemView: ItemWeatherBinding) :
         RecyclerView.ViewHolder(itemView.root) {
 
+        val day: TextView = itemView.itemDay
+        val icon: ImageView = itemView.itemIcon
+        val description: TextView = itemView.itemDescription
+        val max: TextView = itemView.itemMax
+        val min: TextView = itemView.itemMin
 
     }
 }

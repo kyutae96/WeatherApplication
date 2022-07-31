@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/item_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="today"/>
@@ -26,11 +27,13 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/item_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher_background"/>
 
             <TextView
+                android:id="@+id/item_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -45,9 +48,18 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:orientation="horizontal"
         android:gravity="bottom">
 
         <TextView
+            android:id="@+id/item_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="www"/>
+
+        <TextView
+            android:id="@+id/item_min"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
